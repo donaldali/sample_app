@@ -21,7 +21,7 @@ describe "Static pages" do
       expect(page).not_to have_title('| Home')
     end
   end
-
+  
   describe "Help page" do
 
     it "should have the content 'Help'" do
