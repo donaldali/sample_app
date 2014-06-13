@@ -31,6 +31,28 @@ describe "Static pages" do
           expect(page).to have_selector("li##{item.id}", text: item.content)
         end
       end
+
+      describe "micropost count" do
+        it "should handle no micropost" do
+          click_link('delete', match: :first)
+          click_link('delete')
+          expect(page).to have_content("0 microposts")
+        end
+        it "should handle one micropost" do
+          click_link('delete', match: :first)
+          expect(page).to have_content("1 micropost")
+        end
+        it "should handle multiple microposts" do
+          expect(page).to have_content("2 microposts")
+        end
+      end
+
+      it "should paginate the microposts" do
+        31.times { FactoryGirl.create(:micropost, user: user) }
+        visit root_path
+        expect(page).to have_selector('div.pagination')
+      end
+
     end
   end
 
